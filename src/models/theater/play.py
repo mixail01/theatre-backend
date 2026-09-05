@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel, ConfigDict
 
-from src.schemas.base import BaseResponseModel
+from src.models.base import BaseResponseModel
 
 from .actor import ActorResponse
 from .genre import GenreResponse

@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import List
 from pydantic import BaseModel
 
-from src.schemas.base import BaseResponseModel
+from src.models.base import BaseResponseModel
 
 from .ticket import TicketCreate, TicketResponse
 

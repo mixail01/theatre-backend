@@ -1,8 +1,8 @@
 from src.entities import Actor
 from src.repositories.base import BaseRepository
-from src.schemas import ActorResponse
+from src.models import ActorResponse
 
 
-class ActorRepository(BaseRepository):
+class ActorRepository(BaseRepository[Actor, ActorResponse]):
     entity = Actor
     model = ActorResponse

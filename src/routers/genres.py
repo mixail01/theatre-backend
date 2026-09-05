@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from src.db import get_db
-from src import entities, schemas
+from src import entities, models
 
 
 router = APIRouter(
@@ -13,9 +13,9 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=schemas.GenreResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=models.GenreResponse, status_code=status.HTTP_201_CREATED)
 async def create_genre(
-    genre_data: schemas.GenreCreate,
+    genre_data: models.GenreCreate,
     db: AsyncSession = Depends(get_db)
 ):
     new_genre = entities.Genre(**genre_data.model_dump())
@@ -25,7 +25,7 @@ async def create_genre(
     return new_genre
 
 
-@router.get("/", response_model=List[schemas.GenreResponse])
+@router.get("/", response_model=List[models.GenreResponse])
 async def get_genres(
     skip: int = 0,
     limit: int = 100,
@@ -37,7 +37,7 @@ async def get_genres(
     return genres
 
 
-@router.get("/{genre_id}", response_model=schemas.GenreResponse)
+@router.get("/{genre_id}", response_model=models.GenreResponse)
 async def get_genre(
     genre_id: int,
     db: AsyncSession = Depends(get_db)
@@ -51,10 +51,10 @@ async def get_genre(
     return genre
 
 
-@router.put("/{genre_id}", response_model=schemas.GenreResponse)
+@router.put("/{genre_id}", response_model=models.GenreResponse)
 async def update_genre(
     genre_id: int,
-    genre_data: schemas.GenreCreate,
+    genre_data: models.GenreCreate,
     db: AsyncSession = Depends(get_db)
 ):
     genre = await db.get(entities.Genre, genre_id)

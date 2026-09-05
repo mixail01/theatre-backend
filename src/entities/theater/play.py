@@ -4,6 +4,8 @@ from sqlalchemy import String, Text, ForeignKey, Table, Column
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.db import Base
+from src.entities.theater.actor import Actor
+from src.entities.theater.genre import Genre
 
 
 play_actor_association = Table(

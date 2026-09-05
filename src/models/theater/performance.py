@@ -1,7 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 
-from src.schemas.base import BaseResponseModel
+from src.models.base import BaseResponseModel
 
 from .hall import TheatreHallResponse
 from .play import PlayResponse

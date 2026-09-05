@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
-from src.schemas.base import BaseResponseModel
+from src.models.base import BaseResponseModel
 
 
 class TicketBase(BaseModel):

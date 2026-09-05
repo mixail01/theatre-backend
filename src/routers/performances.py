@@ -4,15 +4,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from src.db import get_db
-from src import entities, schemas
+from src import entities, models
 
 
 router = APIRouter(prefix="/performances", tags=["Performances"])
 
 
-@router.post("/", response_model=schemas.PerformanceResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=models.PerformanceResponse, status_code=status.HTTP_201_CREATED)
 async def create_performance(
-    performance_data: schemas.PerformanceCreate,
+    performance_data: models.PerformanceCreate,
     db: AsyncSession = Depends(get_db)
 ):
     play = await db.get(entities.Play, performance_data.play_id)
@@ -30,7 +30,7 @@ async def create_performance(
     return new_performance
 
 
-@router.get("/", response_model=List[schemas.PerformanceResponse])
+@router.get("/", response_model=List[models.PerformanceResponse])
 async def get_performances(
     skip: int = 0,
     limit: int = 100,
@@ -41,7 +41,7 @@ async def get_performances(
     return result.scalars().all()
 
 
-@router.get("/{performance_id}", response_model=schemas.PerformanceResponse)
+@router.get("/{performance_id}", response_model=models.PerformanceResponse)
 async def get_performance(
     performance_id: int,
     db: AsyncSession = Depends(get_db)

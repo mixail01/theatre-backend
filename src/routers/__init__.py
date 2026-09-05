@@ -9,7 +9,7 @@ from .performances import router as performances_router
 from .plays import router as plays_router
 
 
-api_router = APIRouter(prefix="/api")
+api_router = APIRouter(prefix="/routers")
 
 api_router.include_router(auth_router)
 api_router.include_router(actors_router)

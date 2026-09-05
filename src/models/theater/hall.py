@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.schemas.base import BaseResponseModel
+from src.models.base import BaseResponseModel
 
 
 class TheatreHallBase(BaseModel):

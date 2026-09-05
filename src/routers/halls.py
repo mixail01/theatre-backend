@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from src.db import get_db
-from src import entities, schemas
+from src import entities, models
 
 router = APIRouter(
     prefix="/halls",
@@ -12,9 +12,9 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=schemas.TheatreHallResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=models.TheatreHallResponse, status_code=status.HTTP_201_CREATED)
 async def create_hall(
-    hall_data: schemas.TheatreHallCreate,
+    hall_data: models.TheatreHallCreate,
     db: AsyncSession = Depends(get_db)
 ):
     new_hall = entities.TheatreHall(**hall_data.model_dump())
@@ -24,7 +24,7 @@ async def create_hall(
     return new_hall
 
 
-@router.get("/", response_model=List[schemas.TheatreHallResponse])
+@router.get("/", response_model=List[models.TheatreHallResponse])
 async def get_halls(
     skip: int = 0,
     limit: int = 100,
@@ -36,7 +36,7 @@ async def get_halls(
     return halls
 
 
-@router.get("/{hall_id}", response_model=schemas.TheatreHallResponse)
+@router.get("/{hall_id}", response_model=models.TheatreHallResponse)
 async def get_hall(
     hall_id: int,
     db: AsyncSession = Depends(get_db)
@@ -50,10 +50,10 @@ async def get_hall(
     return hall
 
 
-@router.put("/{hall_id}", response_model=schemas.TheatreHallResponse)
+@router.put("/{hall_id}", response_model=models.TheatreHallResponse)
 async def update_hall(
     hall_id: int,
-    hall_data: schemas.TheatreHallCreate,
+    hall_data: models.TheatreHallCreate,
     db: AsyncSession = Depends(get_db)
 ):
     hall = await db.get(entities.TheatreHall, hall_id)

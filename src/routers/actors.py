@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from src.db import get_db
-from src import entities, schemas
+from src import entities, models
 
 
 router = APIRouter(
@@ -13,9 +13,9 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=schemas.ActorResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=models.ActorResponse, status_code=status.HTTP_201_CREATED)
 async def create_actor(
-    actor_data: schemas.ActorCreate,
+    actor_data: models.ActorCreate,
     db: AsyncSession = Depends(get_db)
 ):
     new_actor = entities.Actor(**actor_data.model_dump())
@@ -26,7 +26,7 @@ async def create_actor(
 
 
 
-@router.get("/", response_model=List[schemas.ActorResponse])
+@router.get("/", response_model=List[models.ActorResponse])
 async def get_actors(
     skip: int = 0,
     limit: int = 100,
@@ -39,7 +39,7 @@ async def get_actors(
 
 
 
-@router.get("/{actor_id}", response_model=schemas.ActorResponse)
+@router.get("/{actor_id}", response_model=models.ActorResponse)
 async def get_actor(
     actor_id: int,
     db: AsyncSession = Depends(get_db)
@@ -54,10 +54,10 @@ async def get_actor(
 
 
 
-@router.put("/{actor_id}", response_model=schemas.ActorResponse)
+@router.put("/{actor_id}", response_model=models.ActorResponse)
 async def update_actor(
     actor_id: int,
-    actor_data: schemas.ActorCreate,
+    actor_data: models.ActorCreate,
     db: AsyncSession = Depends(get_db)
 ):
     actor = await db.get(entities.Actor, actor_id)

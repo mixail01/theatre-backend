@@ -5,14 +5,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.db import get_db
 from src.entities import User
-from src import schemas
+from src import models
 from src.core.security import get_password_hash, verify_password, create_access_token
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
-@router.post("/register", response_model=schemas.UserResponse, status_code=status.HTTP_201_CREATED)
-async def register(user_data: schemas.UserCreate, db: AsyncSession = Depends(get_db)):
+@router.post("/register", response_model=models.UserResponse, status_code=status.HTTP_201_CREATED)
+async def register(user_data: models.UserCreate, db: AsyncSession = Depends(get_db)):
     existing_user = await db.scalar(select(User).where(User.email == user_data.email))
     if existing_user:
         raise HTTPException(
@@ -32,7 +32,7 @@ async def register(user_data: schemas.UserCreate, db: AsyncSession = Depends(get
     return new_user
 
 
-@router.post("/login", response_model=schemas.Token)
+@router.post("/login", response_model=models.Token)
 async def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: AsyncSession = Depends(get_db)

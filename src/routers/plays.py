@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from src.db import get_db
-from src import entities, schemas
+from src import entities, models
 
 
 router = APIRouter(
@@ -14,9 +14,9 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=schemas.PlayResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=models.PlayResponse, status_code=status.HTTP_201_CREATED)
 async def create_play(
-    play_data: schemas.PlayCreate,
+    play_data: models.PlayCreate,
     db: AsyncSession = Depends(get_db)
 ):
     new_play = entities.Play(
@@ -46,7 +46,7 @@ async def create_play(
     return result.scalar_one()
 
 
-@router.get("/", response_model=List[schemas.PlayResponse])
+@router.get("/", response_model=List[models.PlayResponse])
 async def get_plays(
     skip: int = 0,
     limit: int = 100,
@@ -62,7 +62,7 @@ async def get_plays(
     return result.scalars().all()
 
 
-@router.get("/{play_id}", response_model=schemas.PlayResponse)
+@router.get("/{play_id}", response_model=models.PlayResponse)
 async def get_play(
     play_id: int,
     db: AsyncSession = Depends(get_db)
@@ -83,10 +83,10 @@ async def get_play(
     return play
 
 
-@router.put("/{play_id}", response_model=schemas.PlayResponse)
+@router.put("/{play_id}", response_model=models.PlayResponse)
 async def update_play(
     play_id: int,
-    play_data: schemas.PlayCreate,
+    play_data: models.PlayCreate,
     db: AsyncSession = Depends(get_db)
 ):
     query = (
