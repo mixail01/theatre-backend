@@ -1,0 +1,8 @@
+entities -> models -> repositories -> interfaces/services -> routers
+
+entities - модели базы данных
+models - Pidantic модели
+repositories - SQL запросы
+interfaces - логика приложения относящаяся к моделям
+services - внешние зависимости (Telegram / API чужой и тд)
+routers - твои api endpoints
